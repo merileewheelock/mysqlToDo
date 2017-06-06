@@ -41,7 +41,9 @@
 					<tr>
 						<td><%= taskArray[i].taskName %></td>
 						<td><%= taskArray[i].taskDate %></td>
-						<td><button class="btn btn-warning">Edit</button></td>
+						<td><a href="/edit/<%= taskArray[i].id %>">
+							<button class="btn btn-warning">Edit</button>
+						</a></td>
 						<td><a href="/delete/<%= taskArray[i].id %>">
 							<button class="btn btn-danger">Delete</button>
 						</a></td>
