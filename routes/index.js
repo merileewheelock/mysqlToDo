@@ -18,7 +18,18 @@ connection.connect();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+	var message = req.query.msg;
+	if (message == "added"){
+		message = "Your task was added!";
+	}
+	var selectQuery = "SELECT * FROM tasks ORDER BY taskDate;";
+	connection.query(selectQuery, (error, results)=>{
+		res.render('index', {
+			message: message,
+			taskArray:results
+		});
+	});
+	// res.render('index', { message: message });
 });
 
 // Add a post route "addItem" to handle the form submission
@@ -32,8 +43,17 @@ router.post('/addItem',(req,res)=>{
 	// res.send(insertQuery);
 	connection.query(insertQuery, (error, results)=>{
 		if (error) throw error;
-		res.redirect('/');
+		res.redirect('/?msg=added');
 	})
+});
+
+router.get('/delete/:id', (req, res)=>{
+	var idToDelete = req.params.id;
+	var deleteQuery = "DELETE FROM tasks WHERE id = " + idToDelete;
+	connection.query(deleteQuery, (error, results)=>{
+		res.redirect('/?msg=deleted');
+	});
+	// res.send(idToDelete);
 });
 
 module.exports = router;
