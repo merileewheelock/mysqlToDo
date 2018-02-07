@@ -30,7 +30,7 @@ router.get('/', function(req, res, next) {
 	connection.query(selectQuery, (error, results)=>{
 		res.render('index', {
 			message: message,
-			taskArray:results
+			taskArray: results
 		});
 	});
 	// res.render('index', { message: message });
